@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=Transaction
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Transaction\ here.\r\n\r\n\ @author\ (bagus\ n)\r\n\ @version\ (modul\ 3)\r\n
+comment1.params=id\ buyerId\ storeId
+comment1.target=Transaction(int,\ int,\ int)
+comment2.params=id\ buyer\ store
+comment2.target=Transaction(int,\ Account,\ Store)
+numComments=3
