@@ -26,13 +26,9 @@ public class Account extends Recognizable implements FileParser
         return false;
     }
 
-    public Object write()
-    {
-        return null;
-    }
-
-    public static Object newInstance(String content) 
-    {
-        return null;
+    public String toString() {
+        return "name: " + this.name + 
+                "\naddress: " + this.email + 
+                "\nphoneNumber: " + this.password;
     }
 }
