@@ -1,5 +1,7 @@
 package BagusJmartMH;
-
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Write a description of class Invoice here.
@@ -9,7 +11,7 @@ package BagusJmartMH;
  */
 public abstract class Invoice extends Recognizable implements FileParser
 {
-    public String date;
+    public Date date;
     public int buyerId;
     public int productId;
     public int complaintId;
@@ -25,7 +27,7 @@ public abstract class Invoice extends Recognizable implements FileParser
     }
      protected Invoice(int id, int buyerId, int productId) {
         super(id);
-        this.date = "test_date";
+        this.date = new Date();
         this.buyerId = buyerId;
         this.productId = productId;
         this.rating = Rating.NONE;

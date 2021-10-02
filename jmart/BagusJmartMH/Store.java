@@ -1,5 +1,6 @@
 package BagusJmartMH;
-
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * Write a description of class Store here.
@@ -9,6 +10,8 @@ package BagusJmartMH;
  */
 public class Store extends Recognizable implements FileParser
 {
+    public static final String REGEX_NAME = "^\\d{9,12}$";;
+    public static final String REGEX_PHONE = "^[A-Z](?!.*(\\s)\1).{4,20}$";
     public String name;
     public String address;
     public String phoneNumber;
@@ -38,7 +41,18 @@ public class Store extends Recognizable implements FileParser
     }
 
     
-    public static Object newInstance(String content){
-        return null;
+    public boolean validate(){
+        Pattern patternNama = Pattern.compile(REGEX_NAME);
+        Matcher matcherNama = patternNama.matcher(this.name);
+        Pattern patternPhone = Pattern.compile(REGEX_PHONE);
+        Matcher matcherPhone = patternPhone.matcher(this.phoneNumber);
+        boolean matchName = matcherNama.find();
+        boolean matchPhone = matcherPhone.find();
+        
+        if (matchName == true && matchPhone==true){
+            return true;
+        }else {
+            return false;
+        }
     }
 }
