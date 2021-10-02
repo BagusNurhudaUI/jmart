@@ -10,7 +10,7 @@ public class Jmart
     }
     
     
-    public static Product createProduct(){
+    /*public static Product createProduct(){
         PriceTag priceTag = new PriceTag(100000);
         Product product = new Product("Cardilas",1,false,priceTag,ProductCategory.TRAVEL);
         return product;
@@ -23,5 +23,5 @@ public class Jmart
     
     public ShipmentDuration createShipmentDuration(){
          return new ShipmentDuration(ShipmentDuration.REGULER, ShipmentDuration.KARGO);
-    }
+    }*/
 }
