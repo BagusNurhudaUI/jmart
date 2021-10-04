@@ -2,6 +2,7 @@ package BagusJmartMH;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.ArrayList;
 
 /**
  * Write a description of class Invoice here.
@@ -11,12 +12,14 @@ import java.util.Calendar;
  */
 public abstract class Invoice extends Recognizable implements FileParser
 {
-    public Date date;
     public int buyerId;
-    public int productId;
     public int complaintId;
+    public Date date;
+    public ArrayList<Record> history = new ArrayList<Record>();
+    public int productId;
     public Rating rating;
     public Status status;
+    
 
     enum Rating {
         NONE, BAD, NEUTRAL, GOOD
@@ -41,4 +44,11 @@ public abstract class Invoice extends Recognizable implements FileParser
     }
 
     public abstract double getTotalPay();
+    
+    static class Record{
+        public Date date;
+        public String message;
+        public Status status;
+    }
+    
 }

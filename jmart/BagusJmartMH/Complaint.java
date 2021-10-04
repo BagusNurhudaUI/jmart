@@ -23,4 +23,9 @@ public class Complaint extends Recognizable implements FileParser
     public boolean read(String content){
         return false;
     }
+    
+    public String toSting(){
+        SimpleDateFormat tanggal = new SimpleDateFormat("dd/MM/yyyy");
+        return "Complaint{date=" + tanggal.format(date) + ", desc='" + desc + "pengiriman tidak tepat, kurir tersesat'}";
+    }
 }
