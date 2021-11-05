@@ -11,11 +11,11 @@ public class Recognizable implements Comparable<Recognizable>
 {
        public final int id;
        
-       protected Recognizable (int id){
-           this.id = id;
+       protected Recognizable (){
+           this.id = 99;
        }
 
-    @Override
+
     public int compareTo(Recognizable other) {
            if ( id == other.id){
                return 1;

@@ -8,31 +8,25 @@ import java.util.regex.Matcher;
  * @author (bagus nurhuda)
  * @version (modul 3)
  */
-public class Store extends Recognizable implements FileParser
+public class Store extends Recognizable
 {
     public static final String REGEX_NAME = "^\\d{9,12}$";;
     public static final String REGEX_PHONE = "^[A-Z](?!.*(\\s)\1).{4,20}$";
     public String name;
     public String address;
     public String phoneNumber;
-    
-    public Store(int accountId, String name, String address, String phoneNumber){
-        super(accountId);
-        this.name = name;
-        this.address= address;
-        this.phoneNumber = phoneNumber;
-    }
-    
-    public Store(Account account, String name, String address, String phoneNumber){
-        super(account.id);
+    public double balance;
+
+
+    public Store( String name, String address, String phoneNumber,double balance){
+
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.balance = balance;
     }
     
-    public boolean read(String content){
-        return false;
-    }
+
     
     public String toString() {
         return "name: " + this.name + 

@@ -9,19 +9,15 @@ import java.util.Calendar;
  * @author (bagus n)
  * @version (modul 3)
  */
-public class Complaint extends Recognizable implements FileParser
+public class Complaint
 {
     public Date date;
     public String desc;
     
-    public Complaint(int id, String desc){
-        super(id);
+    public Complaint(String desc){
+
         this.date = new Date();
         this.desc = desc;
-    }
-    
-    public boolean read(String content){
-        return false;
     }
     
     public String toSting(){

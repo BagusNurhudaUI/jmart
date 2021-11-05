@@ -7,42 +7,29 @@ package BagusJmartMH;
  * @version (modul 2)
  */
 
-public class Product extends Recognizable implements FileParser
+public class Product extends Recognizable
 {
-    public int storeId;
+    public int accountid;
+    double discount;
+    double price;
+    byte shipmentPlans;
     public String name;
     public int weight;
     public boolean conditionUsed;
-    public PriceTag priceTag;
-    public ProductCategory category ;
-    public ProductRating rating;
-    public Shipment.MultiDuration multiDuration;
-    
-    public Product(int id, int storeId, String name, int weight, boolean conditionUsed, 
-    PriceTag priceTag, ProductCategory category, Shipment.MultiDuration multiDuration){
-        super(id);
-        this.storeId = storeId;
+    public ProductCategory category;
+
+    public Product(int accountid, double discount, double price, byte shipmentPlans, String name, int weight, boolean conditionUsed, ProductCategory category) {
+        this.accountid = accountid;
+        this.discount = discount;
+        this.price = price;
+        this.shipmentPlans = shipmentPlans;
         this.name = name;
         this.weight = weight;
         this.conditionUsed = conditionUsed;
-        this.priceTag = priceTag;
         this.category = category;
-        this.rating = new ProductRating();
-        this.multiDuration = multiDuration;
     }
-    
-    
-    public boolean read(String content){
-        return false;
-    }
-    
-    public String toString() {
-        return "Name: " + this.name +
-                "\nWeight: " + this.weight +
-                "\nconditionUsed: " + this.conditionUsed +
-                "\npriceTag: " + this.priceTag +
-                "\ncategory: " + this.category +
-                "\nrating: " + this.rating +
-                "\nstoreId: " + this.storeId;
+
+    public String toString(){
+        return "Name: " + this.name + "\nWeight: " + this.weight +"\nconditionUsed: " + this.conditionUsed +"\npriceTag: " + this.price +"\ncategory: " + this.category +"\nweight: " + this.weight +"\naccount ID: " + this.accountid;
     }
 }

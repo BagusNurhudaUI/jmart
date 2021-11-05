@@ -6,7 +6,7 @@ package BagusJmartMH;
  * @author (bagus n)
  * @version (modul 2)
  */
-public class Coupon extends Recognizable implements FileParser
+public class Coupon extends Recognizable
 {
     public final String name ;
     public final int code;
@@ -14,14 +14,16 @@ public class Coupon extends Recognizable implements FileParser
     public final Type type;
     public final double minimum;
     private boolean used;
-    
+    double price = 10000;
+    double discount = 10;
+
     public enum Type
     {
     DISCOUNT , REBATE
     }
     
-    public Coupon(int id,String name, int code, Type type, double cut, double minimum){
-        super(id);    
+    public Coupon(String name, int code, Type type, double cut, double minimum){
+
         used = false;
         this.name = name;
         this.code = code;
@@ -34,37 +36,26 @@ public class Coupon extends Recognizable implements FileParser
         return used = false;
     }
     
-    public boolean canApply (PriceTag priceTag){
-        if (priceTag.getAdjustedPrice() >= minimum && used == false){
+    public boolean canApply (Treasury treasury){
+        if (treasury.getAdjustedPrice(price, discount) >= minimum && used == false){
             return used = true;
         }else {
             return used = false;
         }
     }
     
-    public double apply (PriceTag priceTag){
+    public double apply (Treasury treasury){
         used = true;
         
         if (type == type.DISCOUNT){
-            return (100 - cut) / 100*priceTag.getAdjustedPrice();
+            return (100 - cut) / 100* treasury.getAdjustedPrice(price, discount);
         }
         else if (type == type.REBATE) {
-            return priceTag.getAdjustedPrice() - priceTag.price;
+            return treasury.getAdjustedPrice(price, discount) - price;
         }else{
             return 0.0;
         }
         
     }
-    
-    public boolean read(String content){
-        return false;
-    }
-    
-    public Object write(){
-        return null;
-    }
-    
-    public static Object newInstance(String content){
-        return null;
-    }
+
 }
