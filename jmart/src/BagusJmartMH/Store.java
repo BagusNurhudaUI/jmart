@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
  * @author (bagus nurhuda)
  * @version (modul 3)
  */
-public class Store extends Recognizable
+public class Store
 {
     public static final String REGEX_NAME = "^\\d{9,12}$";;
     public static final String REGEX_PHONE = "^[A-Z](?!.*(\\s)\1).{4,20}$";
