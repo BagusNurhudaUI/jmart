@@ -1,7 +1,5 @@
 package BagusJmartMH;
 import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +9,7 @@ import java.util.ArrayList;
  * @version (modul 3 PT)
  */
 
-public abstract class Invoice extends Recognizable
+public abstract class Invoice extends Serializable
 {
     public int buyerId;
     public int complaintID;
@@ -21,7 +19,7 @@ public abstract class Invoice extends Recognizable
     public Rating rating;
     public Status status;
 
-    protected Invoice(int id, int buyerId, int productId){
+    protected Invoice(int buyerId, int productId){
         this.date = new Date();
         this.buyerId = buyerId;
         this.productId = productId;

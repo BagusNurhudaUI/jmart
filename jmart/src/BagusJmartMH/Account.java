@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
  * @author (bagus nurhuda)
  * @version (modul 3)
  */
-public class Account extends Recognizable
+public class Account extends Serializable
 {
 
     public String name;
@@ -19,12 +19,13 @@ public class Account extends Recognizable
     public double balance;
     public Store store;
      
-    public Account( String name, String email, String password)
+    public Account( String name, String email, String password, double balance)
     {
 
         this.name = name;
         this.email = email;
         this.password = password;
+        this.balance = balance;
     }
 
     public boolean validate(){

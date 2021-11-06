@@ -6,7 +6,7 @@ package BagusJmartMH;
  * @author (bagus n)
  * @version (modul 2)
  */
-public class Coupon extends Recognizable
+public class Coupon extends Serializable
 {
     public final String name ;
     public final int code;

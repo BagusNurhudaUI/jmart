@@ -7,7 +7,7 @@ package BagusJmartMH;
  * @version (modul 2)
  */
 
-public class Product extends Recognizable
+public class Product extends Serializable
 {
     public int accountid;
     double discount;
