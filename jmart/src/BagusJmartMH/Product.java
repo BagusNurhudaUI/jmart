@@ -9,7 +9,7 @@ package BagusJmartMH;
 
 public class Product extends Serializable
 {
-    public int accountid;
+    public int accountId;
     double discount;
     double price;
     byte shipmentPlans;
@@ -18,8 +18,8 @@ public class Product extends Serializable
     public boolean conditionUsed;
     public ProductCategory category;
 
-    public Product(int accountid, double discount, double price, byte shipmentPlans, String name, int weight, boolean conditionUsed, ProductCategory category) {
-        this.accountid = accountid;
+    public Product(int accountId, double discount, double price, byte shipmentPlans, String name, int weight, boolean conditionUsed, ProductCategory category) {
+        this.accountId = accountId;
         this.discount = discount;
         this.price = price;
         this.shipmentPlans = shipmentPlans;
@@ -30,6 +30,6 @@ public class Product extends Serializable
     }
 
     public String toString(){
-        return "Name: " + this.name + "\nWeight: " + this.weight +"\nconditionUsed: " + this.conditionUsed +"\npriceTag: " + this.price +"\ncategory: " + this.category +"\nweight: " + this.weight +"\naccount ID: " + this.accountid;
+        return "Name: " + this.name + "\nWeight: " + this.weight +"\nconditionUsed: " + this.conditionUsed +"\npriceTag: " + this.price +"\ncategory: " + this.category +"\nweight: " + this.weight +"\naccount ID: " + this.accountId;
     }
 }
