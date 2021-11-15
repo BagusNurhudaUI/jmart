@@ -1,6 +1,10 @@
 package BagusJmartMH;
 
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Write a description of class Payment here.
  *
@@ -11,18 +15,27 @@ public class Payment extends Invoice
 {
     public Shipment shipment;
     public int productCount;
+    ArrayList<Record> history = new ArrayList<>();
 
-    public Payment( int buyerId, int productId, int productCount, Shipment shipment){
-        super(buyerId, productId);
-        this.productCount = productCount;
-        this.shipment = shipment;
+    static class Record{
+        public Status status;
+        public final Date date;
+        public String message;
 
-
+        public Record(Status status, String message){
+            this.status = status;
+            this.message = message;
+            this.date = Calendar.getInstance().getTime();
+        }
     }
 
-    @Override
-    public double getTotalPay() {
+    public Payment(int buyerId, int productId, int productCount, Shipment shipment){
+        super(buyerId,productId);
+        this.productCount = productCount;
+        this.shipment = shipment;
+    }
 
-        return 0;
+    public double getTotalPay(Product product){
+        return productCount * product.price;
     }
 }
