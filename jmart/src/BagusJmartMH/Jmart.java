@@ -2,16 +2,14 @@ package BagusJmartMH;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Collections;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
+
 import com.google.gson.*;
 import java.io.File;
-import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import com.google.gson.*;
@@ -21,30 +19,86 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.util.Vector;
 
-public class Jmart
-{
+public class Jmart {
+
+    public static long DELIVERED_LIMIT_MS;
+    public static long ON_DELIVERY_LIMIT_MS;
+    public static long ON_PROGRESS_LIMIT_MS;
+    public static long WAITING_CONF_LIMIT_MS;
 
     public static void main(String[] args) {
-        // String filepath = "C:/Users/bagus/Desktop/PrakOOP/jmart/src/GoldenSample/randomProductList.json";
-//        String filepath = "C:/Users/bagus/Desktop/PrakOOP/jmar/src/GoldenSample/tesJson.json";
         try {
-            String filepath = "C:/Users/bagus/Desktop/PrakOOP/jmart/src/GoldenSample/tesJson.json";
-
-            JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath);
-            tableAccount.add(new Account("name", "email", "password",1000 ));
-            tableAccount.writeJson();
-
-            tableAccount = new JsonTable<>(Account.class, filepath);
-            tableAccount.forEach(account -> System.out.println(account.toString()));
-        }
-            catch(Throwable t)
-            {
+            // sesuaikan argument dibawah dengan lokasi resource file yang Anda unduh di EMAS!
+            String filepath = "C:/Users/bagus/Desktop/PrakOOP/jmart/src/GoldenSample/randomPaymentList.json";
+            JsonTable<Payment> table = new JsonTable<>(Payment.class, "randomPaymentList.json");
+            // membuat thread untuk payment pool
+            ObjectPoolThread<Payment> paymentPool = new ObjectPoolThread<Payment>("Thread-pp", Jmart::paymentTimekeeper);
+            // menjalankan thread (ingat menggunakan start bukan run), run melakukan instruksi dalam current thread
+            paymentPool.start();
+            //tambahkan seluruh payment hasil baca ke dalam pool
+            table.forEach(payment -> paymentPool.add(payment));
+            // berikan sinyal untuk keluar dari routine apabila seluruh objek telah di proses
+            while (paymentPool.size() != 0) ;
+            paymentPool.exit();
+            // tunggu hingga thread selesai di eksekusi
+            while (paymentPool.isAlive()) ;
+            // thread telah berhasil di selesaikan
+            System.out.println("Thread exited successfully");
+            // cek hasil output
+            Gson gson = new Gson();
+            table.forEach(payment -> {
+                String history = gson.toJson(payment.history);
+                System.out.println(history);
+            });
+        } catch (Throwable t) {
             t.printStackTrace();
         }
 
     }
+
+    public static boolean paymentTimekeeper(Payment payment) {
+        Payment.Record record = payment.history.get(payment.history.size() - 1);
+        long elapsed = Math.abs(record.date.getTime() - (new Date()).getTime());
+
+        if (record.status == Invoice.Status.WAITING_CONFIRMATION && elapsed > WAITING_CONF_LIMIT_MS) {
+            payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Waiting"));
+            return true;
+        } else if (record.status == Invoice.Status.ON_PROGRESS && elapsed > ON_PROGRESS_LIMIT_MS) {
+            payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Progress"));
+            return true;
+        } else if (record.status == Invoice.Status.ON_DELIVERY && elapsed > ON_DELIVERY_LIMIT_MS) {
+            payment.history.add(new Payment.Record(Invoice.Status.DELIVERED, "Delivery"));
+            return false;
+        } else if (record.status == Invoice.Status.DELIVERED && elapsed > DELIVERED_LIMIT_MS) {
+            payment.history.add(new Payment.Record(Invoice.Status.FINISHED, "Finish"));
+            return true;
+        }
+        return false;
+
+    }
+}
+
+
+//    public static void main(String[] args) {
+//        // String filepath = "C:/Users/bagus/Desktop/PrakOOP/jmart/src/GoldenSample/randomProductList.json";
+////        String filepath = "C:/Users/bagus/Desktop/PrakOOP/jmar/src/GoldenSample/tesJson.json";
+//        try {
+//            String filepath = "C:/Users/bagus/Desktop/PrakOOP/jmart/src/GoldenSample/tesJson.json";
+//
+//            JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath);
+//            tableAccount.add(new Account("name", "email", "password",1000 ));
+//            tableAccount.writeJson();
+//
+//            tableAccount = new JsonTable<>(Account.class, filepath);
+//            tableAccount.forEach(account -> System.out.println(account.toString()));
+//        }
+//            catch(Throwable t)
+//            {
+//            t.printStackTrace();
+//        }
+//
+//    }
 //            List<Product>list = read("C:/Users/bagus/Desktop/PrakOOP/jmart/src/GoldenSample/randomProductList.json");
 //
 //            System.out.println("filtered by account id");
@@ -202,4 +256,4 @@ public class Jmart
     public ShipmentDuration createShipmentDuration(){
          return new ShipmentDuration(ShipmentDuration.REGULER, ShipmentDuration.KARGO);
     }*/
-}
+
