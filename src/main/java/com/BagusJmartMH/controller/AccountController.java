@@ -1,5 +1,5 @@
 // TODO sesuaikan dengan package Anda: package com.alvinJmartRK.controller;
-package controller;
+package com.BagusJmartMH.controller;
 
 // TODO sesuaikan dengan package Anda: import com.alvinJmartRK.Account;
 import com.BagusJmartMH.Account;
