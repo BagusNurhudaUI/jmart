@@ -33,32 +33,32 @@ public class Jmart {
 
     public static void main(String[] args) {
         SpringApplication.run(Jmart.class, args);
-//        try {
-//            // sesuaikan argument dibawah dengan lokasi resource file yang Anda unduh di EMAS!
-//            String filepath = "C:/Users/bagus/Desktop/PrakOOP/jmart/src/GoldenSample/randomPaymentList.json";
-//            JsonTable<Payment> table = new JsonTable<>(Payment.class, "randomPaymentList.json");
-//            // membuat thread untuk payment pool
-//            ObjectPoolThread<Payment> paymentPool = new ObjectPoolThread<Payment>("Thread-pp", Jmart::paymentTimekeeper);
-//            // menjalankan thread (ingat menggunakan start bukan run), run melakukan instruksi dalam current thread
-//            paymentPool.start();
-//            //tambahkan seluruh payment hasil baca ke dalam pool
-//            table.forEach(payment -> paymentPool.add(payment));
-//            // berikan sinyal untuk keluar dari routine apabila seluruh objek telah di proses
-//            while (paymentPool.size() != 0) ;
-//            paymentPool.exit();
-//            // tunggu hingga thread selesai di eksekusi
-//            while (paymentPool.isAlive()) ;
-//            // thread telah berhasil di selesaikan
-//            System.out.println("Thread exited successfully");
-//            // cek hasil output
-//            Gson gson = new Gson();
-//            table.forEach(payment -> {
-//                String history = gson.toJson(payment.history);
-//                System.out.println(history);
-//            });
-//        } catch (Throwable t) {
-//            t.printStackTrace();
-//        }
+        try {
+            // sesuaikan argument dibawah dengan lokasi resource file yang Anda unduh di EMAS!
+            String filepath = "C:/Users/bagus/Desktop/PrakOOP/jmart/src/GoldenSample/randomPaymentList.json";
+            JsonTable<Payment> table = new JsonTable<>(Payment.class, "randomPaymentList.json");
+            // membuat thread untuk payment pool
+            ObjectPoolThread<Payment> paymentPool = new ObjectPoolThread<Payment>("Thread-pp", Jmart::paymentTimekeeper);
+            // menjalankan thread (ingat menggunakan start bukan run), run melakukan instruksi dalam current thread
+            paymentPool.start();
+            //tambahkan seluruh payment hasil baca ke dalam pool
+            table.forEach(payment -> paymentPool.add(payment));
+            // berikan sinyal untuk keluar dari routine apabila seluruh objek telah di proses
+            while (paymentPool.size() != 0) ;
+            paymentPool.exit();
+            // tunggu hingga thread selesai di eksekusi
+            while (paymentPool.isAlive()) ;
+            // thread telah berhasil di selesaikan
+            System.out.println("Thread exited successfully");
+            // cek hasil output
+            Gson gson = new Gson();
+            table.forEach(payment -> {
+                String history = gson.toJson(payment.history);
+                System.out.println(history);
+            });
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
 
     }
 
