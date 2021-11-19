@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PrakOOP.iml" filepath="$PROJECT_DIR$/PrakOOP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jmart.iml" filepath="$PROJECT_DIR$/jmart.iml" />
     </modules>
   </component>
 </project>

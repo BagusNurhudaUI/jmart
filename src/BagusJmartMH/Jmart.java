@@ -30,7 +30,7 @@ public class Jmart {
     public static void main(String[] args) {
         try {
             // sesuaikan argument dibawah dengan lokasi resource file yang Anda unduh di EMAS!
-            String filepath = "C:/Users/bagus/Desktop/PrakOOP/jmart/src/GoldenSample/randomPaymentList.json";
+            String filepath = "C:/Users/bagus/Desktop/jmart/src/GoldenSample/randomPaymentList.json";
             JsonTable<Payment> table = new JsonTable<>(Payment.class, "randomPaymentList.json");
             // membuat thread untuk payment pool
             ObjectPoolThread<Payment> paymentPool = new ObjectPoolThread<Payment>("Thread-pp", Jmart::paymentTimekeeper);
