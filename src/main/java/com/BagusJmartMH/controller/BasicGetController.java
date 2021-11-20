@@ -15,6 +15,7 @@ public interface BasicGetController <T extends Serializable>{
     default T getById (@PathVariable int id){
         return Algorithm.<T>find(getJsonTable(), (e) -> e.id == id);
     }
+
     public abstract JsonTable<T> getJsonTable();
 
     @GetMapping("/page")
