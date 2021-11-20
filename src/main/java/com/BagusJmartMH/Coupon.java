@@ -1,5 +1,7 @@
 package com.BagusJmartMH;
 
+import com.BagusJmartMH.dbjson.Serializable;
+
 /**
  * Write a description of class Coupon here.
  *

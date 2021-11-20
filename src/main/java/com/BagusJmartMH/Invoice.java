@@ -1,6 +1,7 @@
 package com.BagusJmartMH;
+import com.BagusJmartMH.dbjson.Serializable;
+
 import java.util.Date;
-import java.util.ArrayList;
 
 /**
  * Write a description of class Invoice here.
