@@ -33,7 +33,7 @@ public class Treasury
         }
     }
 
-    public double getAdjustedPrice(double price, double discount)
+    public static double getAdjustedPrice(double price, double discount)
     {
         double discountprice = getDiscountedPrice(price,discount) + getAdminFee(price,discount);
         return discountprice;

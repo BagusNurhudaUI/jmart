@@ -1,4 +1,4 @@
-package com.BagusJmartMH.controller;
+package com.BagusJmartMH;
 
 import com.BagusJmartMH.Account;
 import com.BagusJmartMH.ObjectPoolThread;
@@ -8,6 +8,8 @@ import com.BagusJmartMH.dbjson.JsonAutowired;
 import com.BagusJmartMH.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Date;
 
 public class PaymentController {
     @JsonAutowired(value = Account.class, filepath = "C:/Users/bagus/Desktop/jmart/account.json")
@@ -48,7 +50,23 @@ public class PaymentController {
 
 
     private boolean timekeeper(Payment payment){
-    return false;
+        Payment.Record record = payment.history.get(payment.history.size() - 1);
+        long elapsed = Math.abs(record.date.getTime() - (new Date()).getTime());
+
+        if (record.status == Invoice.Status.WAITING_CONFIRMATION && elapsed > WAITING_CONF_LIMIT_MS) {
+            payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Waiting"));
+            return true;
+        } else if (record.status == Invoice.Status.ON_PROGRESS && elapsed > ON_PROGRESS_LIMIT_MS) {
+            payment.history.add(new Payment.Record(Invoice.Status.FAILED, "Progress"));
+            return true;
+        } else if (record.status == Invoice.Status.ON_DELIVERY && elapsed > ON_DELIVERY_LIMIT_MS) {
+            payment.history.add(new Payment.Record(Invoice.Status.DELIVERED, "Delivery"));
+            return false;
+        } else if (record.status == Invoice.Status.DELIVERED && elapsed > DELIVERED_LIMIT_MS) {
+            payment.history.add(new Payment.Record(Invoice.Status.FINISHED, "Finish"));
+            return true;
+        }
+        return false;
     }
 
 
