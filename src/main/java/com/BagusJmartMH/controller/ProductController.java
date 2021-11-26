@@ -1,5 +1,8 @@
-package com.BagusJmartMH;
+package com.BagusJmartMH.controller;
 
+import com.BagusJmartMH.Algorithm;
+import com.BagusJmartMH.Product;
+import com.BagusJmartMH.ProductCategory;
 import com.BagusJmartMH.controller.AccountController;
 import com.BagusJmartMH.controller.BasicGetController;
 import com.BagusJmartMH.dbjson.JsonAutowired;

@@ -8,7 +8,7 @@ public class Treasury
    public static final double BOTTOM_PRICE = 20000.0;
    public static final double BOTTOM_FEE = 1000.0;
 
-    private double getDiscountedPrice(double price, double discount)
+    private static double getDiscountedPrice(double price, double discount)
     {
         if(discount >= 100.0){
             return 100.0;
@@ -21,7 +21,7 @@ public class Treasury
         return(price-(price*(discount/100)));
     }
 
-    public double getAdminFee(double price, double discount)
+    public static double getAdminFee(double price, double discount)
     {
         double discountprice = getDiscountedPrice(price,discount);
         if(discountprice <= BOTTOM_PRICE){

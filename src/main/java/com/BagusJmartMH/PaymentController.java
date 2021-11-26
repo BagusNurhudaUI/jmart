@@ -1,9 +1,7 @@
 package com.BagusJmartMH;
 
-import com.BagusJmartMH.Account;
-import com.BagusJmartMH.ObjectPoolThread;
-import com.BagusJmartMH.Payment;
-import com.BagusJmartMH.Shipment;
+import com.BagusJmartMH.controller.AccountController;
+import com.BagusJmartMH.controller.ProductController;
 import com.BagusJmartMH.dbjson.JsonAutowired;
 import com.BagusJmartMH.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,21 +20,72 @@ public class PaymentController {
 
     @PostMapping("/{id}/accept")
     public boolean accept (int id){
-    return true;
+        Payment payment = null;
+        for(Payment p : paymentTable){
+            if(p.id == id){
+                payment = p;
+            }
+        }
+        if(payment != null){
+            int size = payment.history.size();
+            Payment.Record lastRecord = payment.history.get(size - 1);
+            if(lastRecord.status == Invoice.Status.WAITING_CONFIRMATION){
+                Payment.Record record = new Payment.Record(Invoice.Status.ON_PROGRESS, "Payment Accepted");
+                payment.history.add(record);
+                return true;
+            }
+        }
+        return false;
     }
 
     @PostMapping("/{id}/cancel")
     public boolean cancel (int id){
-    return true;
+        Payment payment = null;
+        for(Payment p : paymentTable){
+            if(p.id == id){
+                payment = p;
+            }
+        }
+        if(payment != null){
+            int size = payment.history.size();
+            Payment.Record lastRecord = payment.history.get(size - 1);
+            if(lastRecord.status == Invoice.Status.WAITING_CONFIRMATION){
+                Payment.Record record = new Payment.Record(Invoice.Status.CANCELLED, "Payment Cancelled");
+                payment.history.add(record);
+                return true;
+            }
+        }
+        return false;
     }
 
     @PostMapping("/create")
     public Payment create (@RequestParam int buyerId,@RequestParam int productId,@RequestParam int productCount,@RequestParam String shipmentAddress,@RequestParam byte shipmentPlan){
-        Shipment shipment = new Shipment(shipmentAddress, 1000, shipmentPlan, "");
-        Payment payment = new Payment(buyerId, productId, productCount, shipment);
+        Account account = null;
+        Product product = null;
+        for(Account a : AccountController.accountTable){
+            if(a.id == buyerId){
+                account = a;
+            }
+        }
 
-        paymentTable.add(payment);
-        return payment;
+        for(Product p : ProductController.productTable){
+            if(p.id == productId){
+                product = p;
+            }
+        }
+        if(account != null && product != null){
+            Shipment shipment = new Shipment(shipmentAddress, 0, shipmentPlan, null);
+            Payment payment = new Payment(buyerId, productId, productCount, shipment);
+            double price = payment.getTotalPay(product);
+            if(account.balance >= price){
+                account.balance = account.balance - price;
+                payment.history.add(new Payment.Record(Invoice.Status.WAITING_CONFIRMATION, "Payment paid and waiting for the confirmation"));
+                paymentTable.add(payment);
+                poolThread.add(payment);
+                return payment;
+            }
+        }
+        return null;
     }
 
     public JsonTable<Payment> getJsonTable(){
@@ -45,7 +94,23 @@ public class PaymentController {
 
     @PostMapping("/{id}/submit")
     public boolean submit(int id,String receipt){
-    return true;
+        Payment payment = null;
+        for(Payment p : paymentTable){
+            if(p.id == id){
+                payment = p;
+            }
+        }
+        if(payment != null){
+            int size = payment.history.size();
+            Payment.Record lastRecord = payment.history.get(size - 1);
+            if(lastRecord.status == Invoice.Status.ON_PROGRESS && (!receipt.isBlank())){
+                payment.shipment.receipt = receipt;
+                Payment.Record record = new Payment.Record(Invoice.Status.ON_DELIVERY, "Payment Submitted");
+                payment.history.add(record);
+                return true;
+            }
+        }
+        return false;
     }
 
 

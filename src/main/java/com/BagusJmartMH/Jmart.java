@@ -132,11 +132,12 @@ public class Jmart {
 //        System.out.println("payment id:" + new Payment(-1, -1, -1, null).id);
 //        System.out.println("payment id:" + new Payment(-1, -1, -1, null).id);
 //    }
-    public static List<Product> filterByAccountId (List<Product> list, int accountId, int page, int pageSize){
-        Predicate<Product> predicate = i -> (i.accountId == accountId);
-        return paginate(list, page, pageSize, predicate);
-
+    public static List<Product> filterByAccountId (List<Product>list, int accountId, int page, int pageSize){
+        Predicate<Product> pred = product -> (product.accountId == accountId);
+        List<Product> L = paginate(list, page, pageSize, pred);
+        return L;
     }
+
     public static List<Product> filterByCategory (List<Product> list, ProductCategory category){
         List<Product> newList = new ArrayList<Product>();
         for(Product p : list)
@@ -148,9 +149,11 @@ public class Jmart {
         }
         return newList;
     }
-    public static List<Product> filterByName (List<Product> list, String search, int page, int pageSize){
-        Predicate<Product> predicate = a -> (a.name.toLowerCase().contains(search.toLowerCase()));
-        return paginate(list, page, pageSize, predicate);
+    public static List<Product>filterByName (List<Product>list, String search, int page, int pageSize){
+        String lower = search.toLowerCase();
+        Predicate<Product> pred = product -> product.name.toLowerCase().contains(lower);
+        List<Product> L = paginate(list, page, pageSize, pred);
+        return L;
     }
     public static List<Product> filterByPrice (List<Product> list,double minPrice, double maxPrice){
         List<Product> newList = new ArrayList<Product>();

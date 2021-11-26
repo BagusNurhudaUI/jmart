@@ -1,5 +1,7 @@
-package com.BagusJmartMH;
+package com.BagusJmartMH.controller;
 
+import com.BagusJmartMH.Algorithm;
+import com.BagusJmartMH.Coupon;
 import com.BagusJmartMH.controller.BasicGetController;
 import com.BagusJmartMH.dbjson.JsonAutowired;
 import com.BagusJmartMH.dbjson.JsonTable;

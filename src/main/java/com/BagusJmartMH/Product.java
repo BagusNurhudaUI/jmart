@@ -13,7 +13,7 @@ public class Product extends Serializable
 {
     public int accountId;
     double discount;
-    double price;
+    public double price;
     byte shipmentPlans;
     public String name;
     public int weight;
