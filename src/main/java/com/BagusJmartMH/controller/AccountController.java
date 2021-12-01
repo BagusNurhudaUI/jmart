@@ -17,21 +17,24 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping("/account")
 public class AccountController implements BasicGetController<Account> {
-	//@JsonAutowired(value = Account.class, filepath = "C:/Users/bagus/Desktop/jmart/account.json")
+
 	public static final String REGEX_EMAIL = "^[a-zA-Z0-9&*_~]+(\\.[a-zA-Z0-9&*_~]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
 	public static final String REGEX_PASSWORD = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?!.* ).{8,}$";
 	public static final Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
 	public static final Pattern REGEX_PATTERN_PASSWORD = Pattern.compile(REGEX_PASSWORD);
-	public static JsonTable<Account> accountTable;
 
+	@JsonAutowired(value = Account.class, filepath = "C:/Users/bagus/Desktop/jmart/account.json")
+	public static JsonTable<Account> accountTable;
 
 
 	public JsonTable<Account> getJsonTable(){
 		return accountTable;
 	}
 
+
 	@PostMapping("/login")
-	Account login(@RequestParam String email,@RequestParam String password){
+	Account login(@RequestParam String email,
+				  @RequestParam String password){
 		for(Account account : accountTable) {
 			String passH = null;
 			try{
@@ -54,31 +57,28 @@ public class AccountController implements BasicGetController<Account> {
 					@RequestParam String password
 			)
 	{
-		Matcher matcherEmail = REGEX_PATTERN_EMAIL.matcher(email);
-		Matcher matcherPassword = REGEX_PATTERN_PASSWORD.matcher(password);
-		boolean isUnique = true;
-		for(Account a : accountTable)
-		{
-			if(a.email.equals(email))
-			{
-				isUnique = false;
+		Matcher emailMatcher = REGEX_PATTERN_EMAIL.matcher(email);
+		boolean emailMatch = emailMatcher.find();
+		Matcher passwordMatcher = REGEX_PATTERN_PASSWORD.matcher(password);
+		boolean passwordMatch = passwordMatcher.find();
+		boolean unique = true;
+
+		for(Account acc: accountTable){
+			if(acc.email.equals(email)){
+				unique = false;
 				break;
 			}
 		}
-		if(matcherEmail.find() && matcherPassword.find() && (!name.isBlank()) && isUnique)
-		{
-			String passH = null;
-			try {
-				passH = MD5(password);
-			}
-			catch (NoSuchAlgorithmException e){
-				e.printStackTrace();
-			}
-			Account account = new Account(name, email, passH, 0.0);
-			accountTable.add(account);
-			return account;
+
+		if(!name.isBlank() && emailMatch && passwordMatch && unique){
+
+			Account regAccount = new Account(name, email, hashPassword(password), 0);
+			accountTable.add(regAccount);
+			return regAccount;
+
+		} else {
+			return null;
 		}
-		return null;
 	}
 
 	@PostMapping("/{id}/registerStore")
@@ -130,6 +130,25 @@ public class AccountController implements BasicGetController<Account> {
 		}
 	}
 
+	public String hashPassword(String password){
+		try{
+			String generatedPassword = null;
+
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(password.getBytes());
+			byte[] bytes = md.digest();
+
+			StringBuilder sb = new StringBuilder();
+			for(int i = 0; i < bytes.length; i++){
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			generatedPassword = sb.toString();
+			return generatedPassword;
+		} catch (NoSuchAlgorithmException e){
+			e.printStackTrace();
+			return password;
+		}
+	}
 	@GetMapping
 	String index() { return "account page"; }
 
