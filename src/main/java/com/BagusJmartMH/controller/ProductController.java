@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController implements BasicGetController<Product>
 {
-    @JsonAutowired(value = Product.class,filepath = "C:/Users/bagus/Desktop/jmart/coupon.json")
+    @JsonAutowired(value = Product.class,filepath = "C:/Users/bagus/Desktop/jmart/product.json")
     public static JsonTable<Product> productTable;
 
     @Override

@@ -152,6 +152,8 @@ public class AccountController implements BasicGetController<Account> {
 	@GetMapping
 	String index() { return "account page"; }
 
+	@GetMapping("/{id}")
+	public Account getByAccountId(@PathVariable int id) { return getById(id); }
 
 //
 //	@GetMapping("/{id}")
