@@ -2,6 +2,9 @@ package com.BagusJmartMH;
 
 import java.util.*;
 
+/**
+ * merupakan class yang berisi algoritma
+ */
 public class Algorithm {
     private  Algorithm(){
 

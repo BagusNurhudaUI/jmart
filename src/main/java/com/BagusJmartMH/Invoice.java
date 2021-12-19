@@ -4,7 +4,7 @@ import com.BagusJmartMH.dbjson.Serializable;
 import java.util.Date;
 
 /**
- * Write a description of class Invoice here.
+ * merupakan class yang digunakan untuk inisialisasi method dan enum pada invoice
  *
  * @author (bagus n)
  * @version (modul 3 PT)
@@ -20,20 +20,15 @@ public abstract class Invoice extends Serializable
     public Rating rating;
     //public Status status;
 
-    enum Rating{
+    public enum Rating{
         NONE, BAD, NEUTRAL, GOOD;
     }
-    enum Status{
+    public enum Status{
         WAITING_CONFIRMATION, CANCELLED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED,FAILED,DELIVERED;
 
 
     }
 
-    class Record{
-        public Date date;
-        public String message;
-        public Status status;
-    }
 
 
     protected Invoice(int buyerId, int productId){

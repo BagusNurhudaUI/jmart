@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
  * @author (bagus nurhuda)
  * @version (modul 3)
  */
+
 public class Account extends Serializable
 {
 
@@ -20,7 +21,14 @@ public class Account extends Serializable
     public static final String REGEX_PASSWORD = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?!.* ).{8,}$";
     public double balance;
     public Store store;
-     
+
+    /**
+     * merupakan method yang digunakan sebagai construktor dari class akun
+     * @param name
+     * @param email
+     * @param password
+     * @param balance
+     */
     public Account( String name, String email, String password, double balance)
     {
 
@@ -30,6 +38,10 @@ public class Account extends Serializable
         this.balance = balance;
     }
 
+    /**
+     * merupakan method yang digunakan untuk melakukan validasi email dan password berdasarkan regex yang dibuat
+     * @return
+     */
     public boolean validate(){
         Pattern patternEmail = Pattern.compile(REGEX_EMAIL);
         Matcher matcherEmail = patternEmail.matcher(this.email);

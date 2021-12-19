@@ -3,7 +3,7 @@ package com.BagusJmartMH;
 import com.BagusJmartMH.dbjson.Serializable;
 
 /**
- * Write a description of class Coupon here.
+ * merupakan class yang digunakan untuk melakukan inisialisasi coupon dan method aplikasi coupon
  *
  * @author (bagus n)
  * @version (modul 2)

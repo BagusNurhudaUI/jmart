@@ -3,7 +3,7 @@ package com.BagusJmartMH;
 import com.BagusJmartMH.dbjson.Serializable;
 
 /**
- * Write a description of class Product here.
+ * merupakan class yang digunakan untuk inisialisasi objek yang akan digunakan dalam product
  *
  * @author (bagus n)
  * @version (modul 2)
@@ -20,6 +20,17 @@ public class Product extends Serializable
     public boolean conditionUsed;
     public ProductCategory category;
 
+    /**
+     * merupakan inisialisasi construktor pada product
+     * @param accountId
+     * @param discount
+     * @param price
+     * @param shipmentPlans
+     * @param name
+     * @param weight
+     * @param conditionUsed
+     * @param category
+     */
     public Product(int accountId, double discount, double price, byte shipmentPlans, String name, int weight, boolean conditionUsed, ProductCategory category) {
         this.accountId = accountId;
         this.discount = discount;

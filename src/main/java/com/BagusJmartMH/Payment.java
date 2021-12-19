@@ -15,13 +15,19 @@ public class Payment extends Invoice
 {
     public Shipment shipment;
     public int productCount;
-    ArrayList<Record> history = new ArrayList<>();
+    public ArrayList<Record> history = new ArrayList<>();
+    public int storeId;
 
-    static class Record{
+    public static class Record{
         public Status status;
         public final Date date;
         public String message;
 
+        /**
+         * Constructor objek Record
+         * @param status status dari Record dengan nilai dari objek Status
+         * @param message pesan pada suatu Record
+         */
         public Record(Status status, String message){
             this.status = status;
             this.message = message;
@@ -29,12 +35,26 @@ public class Payment extends Invoice
         }
     }
 
-    public Payment(int buyerId, int productId, int productCount, Shipment shipment){
-        super(buyerId,productId);
-        this.productCount = productCount;
+    /**
+     * merupakan construktor untuk membuat object payment
+     * @param buyerId
+     * @param productId
+     * @param productCount
+     * @param shipment
+     * @param storeId
+     */
+    public Payment(int buyerId, int productId, int productCount, Shipment shipment, int storeId) {
+        super(buyerId, productId);
         this.shipment = shipment;
+        this.productCount = productCount;
+        this.storeId = storeId;
     }
 
+    /**
+     * method untuk mengembalikan nilai total harga dari product pada invoice
+     * @param product
+     * @return
+     */
     public double getTotalPay(Product product){
         return productCount * product.price;
     }

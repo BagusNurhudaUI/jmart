@@ -8,6 +8,10 @@ import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.Vector;
 
+/**
+ * merupakan class yang digunakan untuk melakukan penulisan dan pembacaan dari json
+ * @param <T>
+ */
 public class JsonTable<T> extends Vector<T>
 {
     private static final Gson gson = new Gson();

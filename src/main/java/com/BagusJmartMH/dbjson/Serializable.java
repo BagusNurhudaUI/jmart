@@ -15,6 +15,9 @@ public class Serializable implements Comparable<Serializable>
     private static HashMap<Class<?>, Integer> mapCounter = new HashMap<>();
     public final int id;
 
+    /**
+     * Constructor untuk objek Serializable yang berfungsi untuk menghitung id secara serial
+     */
     protected Serializable()
     {
         Integer counter = mapCounter.get(getClass());

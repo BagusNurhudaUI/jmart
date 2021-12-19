@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * merupakan method yang digunakan untuk melakukan perubahan pada coupon json
+ */
 @RestController
 @RequestMapping("/coupon")
 public class CouponController implements BasicGetController<Coupon> {
@@ -20,6 +23,11 @@ public class CouponController implements BasicGetController<Coupon> {
         return couponTable;
     }
 
+    /**
+     * untuk mendapatkan informasi coupon berdasarkan idnya
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}/isUsed")
     boolean isUsed(@PathVariable int id){
         for(Coupon c : couponTable){
@@ -30,6 +38,13 @@ public class CouponController implements BasicGetController<Coupon> {
         return false;
     }
 
+    /**
+     * untuk mendapatkan coupon yang dapat diapply berdasarkan idnya
+     * @param id
+     * @param price
+     * @param discount
+     * @return
+     */
     @GetMapping("/{id}/canApply")
     boolean canApply(@PathVariable int id, @RequestParam double price, @RequestParam double discount){
         for(Coupon c : couponTable){
